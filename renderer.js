@@ -7,11 +7,11 @@
  */
 
 (async () => {
-    console.log(await window.exposed.getStuffFromMain())
+    //console.log(await window.exposed.getStuffFromMain())
 
     await window.exposed.sendStuffToMain('Stuff from renderer')
 })()
 
 document.querySelector('#btn-login').addEventListener('click', async () =>{
-    await window.electron.login()
+    await window.exposed.login()
 })
