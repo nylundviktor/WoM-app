@@ -63,12 +63,13 @@ ipcMain.handle('login', async (event, data) =>{
 ipcMain.handle('get-cabins', async () => {
   console.log('main, get cabins')
 
-  const resp = await fetch('http://localhost:3101' + '/cabins', {
+  /*
+  const resp = await fetch('http://localhost:3101/cabins', {
     timeout: 3000
   })
 
   const cabins = await resp.json()
-
+  */
 })
 
 // Example functions for communication between main and renderer (backend/frontend)

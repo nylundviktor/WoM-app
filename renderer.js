@@ -6,6 +6,11 @@
  * to expose Node.js functionality from the main process.
  */
 
+getCabins = async () => {
+    console.log('GET CABINS RENDERER')
+}
+getCabins()
+
 (async () => {
     console.log(await window.exposed.getStuffFromMain())
 
