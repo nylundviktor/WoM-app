@@ -11,12 +11,11 @@ getCabins = async () => {
 }
 getCabins()
 
-(async () => {
-    //console.log(await window.exposed.getStuffFromMain())
-
-    await window.exposed.sendStuffToMain('Stuff from renderer')
-})()
-
+//login button
 document.querySelector('#btn-login').addEventListener('click', async () =>{
-    await window.exposed.login()
+    //pass on the values from login fields to preload.js (which in turn passes on to main.js)
+    await window.exposed.login({
+        email: document.querySelector('#email').value,
+        password: document.querySelector('#password').value
+    })
 })

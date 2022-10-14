@@ -42,10 +42,7 @@ ipcMain.handle('login', async (event, data) =>{
     const resp = await fetch(API_URL + '/users/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        "email": "SS@mail.fifi",
-        "password": "pass123"
-    }),
+      body: JSON.stringify(data),
       timeout:3000
     })
     const user = await resp.json()

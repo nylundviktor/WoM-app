@@ -10,7 +10,7 @@ contextBridge.exposeInMainWorld('exposed', {
     return ipcRenderer.invoke('get-cabins')
   },
 
-  login: () => ipcRenderer.invoke('login', 0),
+  login: (data) => ipcRenderer.invoke('login', data),
 
   // expose a function in main (node) to renderer
   getStuffFromMain: () => ipcRenderer.invoke('get-stuff-from-main'),
