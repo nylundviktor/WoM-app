@@ -58,7 +58,7 @@ ipcMain.handle('login', async (event, data) =>{
     console.log(error.message)
     return false    
   }
-)
+})
 
 ipcMain.handle('get-cabins', async () => {
   console.log('main, get cabins')
