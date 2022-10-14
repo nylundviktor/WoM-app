@@ -1,6 +1,10 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
+const fetch = require('electron-fetch').default
+
+//move to dotenv,
+const API_URL = "https://nylund-svarvar.azurewebsites.net"
 
 function createWindow () {
   // Create the browser window.
@@ -28,6 +32,32 @@ app.whenReady().then(() => {
   createWindow()
 
   // Check original template for MacOS stuff!
+})
+
+//Login function
+ipcMain.handle('login', async (event, data) =>{
+  //log just to see if function runs
+  console.log('login (main)')
+  try {
+    const resp = await fetch(API_URL + '/users/login', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        "email": "SS@mail.fifi",
+        "password": "pass123"
+    }),
+      timeout:3000
+    })
+    const user = await resp.json()
+    console.log(user)
+    if (resp.status > 201) return false
+
+    return true
+
+  } catch (error) {
+    console.log(error.message)
+    return false    
+  }
 })
 
 // Example functions for communication between main and renderer (backend/frontend)
