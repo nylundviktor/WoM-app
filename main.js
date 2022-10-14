@@ -9,8 +9,8 @@ const API_URL = "https://nylund-svarvar.azurewebsites.net"
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 900,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
@@ -58,10 +58,23 @@ ipcMain.handle('login', async (event, data) =>{
     console.log(error.message)
     return false    
   }
+)
+
+ipcMain.handle('get-cabins', async () => {
+  console.log('main, get cabins')
+
+  const resp = await fetch('http://localhost:3101' + '/cabins', {
+    timeout: 3000
+  })
+
+  const cabins = await resp.json()
+
 })
 
 // Example functions for communication between main and renderer (backend/frontend)
-ipcMain.handle('get-stuff-from-main', () => 'Stuff from main!')
+// Node sends comment to the browser, renderer.js
+//ipcMain.handle('get-stuff-from-main', () => 'Main says something')
+// The browser sends comment to node, main.js
 ipcMain.handle('send-stuff-to-main', async (event, data) => console.log(data))
 
 
@@ -69,5 +82,3 @@ app.on('window-all-closed', function () {
   app.quit()
   // Check original template for MacOS stuff!
 })
-
-
