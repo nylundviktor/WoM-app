@@ -6,8 +6,8 @@
  * to expose Node.js functionality from the main process.
  */
 
-(async() => {
+(async () => {
     console.log(await window.exposed.getStuffFromMain())
-    
+
     await window.exposed.sendStuffToMain('Stuff from renderer')
 })()
