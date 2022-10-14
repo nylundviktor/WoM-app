@@ -8,14 +8,12 @@
 
 getCabins = async () => {
     console.log('GET CABINS RENDERER')
+    
+    const cabins = await window.exposed.getCabins()
+    console.log(cabins)
+
 }
 getCabins()
-
-(async () => {
-    //console.log(await window.exposed.getStuffFromMain())
-
-    await window.exposed.sendStuffToMain('Stuff from renderer')
-})()
 
 document.querySelector('#btn-login').addEventListener('click', async () =>{
     await window.exposed.login()

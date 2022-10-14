@@ -6,9 +6,7 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('exposed', {
 
-  getCabins: () => {
-    return ipcRenderer.invoke('get-cabins')
-  },
+  getCabins: () => { ipcRenderer.invoke('get-cabins') },
 
   login: () => ipcRenderer.invoke('login', 0),
 
