@@ -1,12 +1,12 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, ipcMain} = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const fetch = require('electron-fetch').default
 
 //move to dotenv,
 const API_URL = "https://nylund-svarvar.azurewebsites.net"
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1200,
@@ -14,7 +14,7 @@ function createWindow () {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
-    autoHideMenuBar: false // true to hide, press Alt to show when hidden
+    autoHideMenuBar: true // true to hide, press Alt to show when hidden
   })
 
   // and load the index.html of the app.
@@ -27,23 +27,20 @@ function createWindow () {
 
 // Called when Electron is ready to create browser windows.
 app.whenReady().then(() => {
-
-
   createWindow()
-
   // Check original template for MacOS stuff!
 })
 
 //Login function
-ipcMain.handle('login', async (event, data) =>{
+ipcMain.handle('login', async (event, data) => {
   //log just to see if function runs
   console.log('login (main)')
   try {
     const resp = await fetch(API_URL + '/users/login', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-      timeout:3000
+      timeout: 3000
     })
     const user = await resp.json()
     console.log(user)
@@ -53,21 +50,32 @@ ipcMain.handle('login', async (event, data) =>{
 
   } catch (error) {
     console.log(error.message)
-    return false    
+    return false
   }
 })
 
 // Get cabins
-
 ipcMain.handle('get-cabins', async () => {
   console.log('main, get cabins')
-  return false
+
+  try {
+    const res = await fetch(API_URL + '/cabins', {
+      timeout: 3000
+    })
   
+    const cabins = await res.json()
+    return cabins
+
+  } catch (error) {
+    console.log(error.message)
+    return false
+  }
 })
 
-// Example functions for communication between main and renderer (backend/frontend)
+
+// Example 
 // Node sends comment to the browser, renderer.js
-//ipcMain.handle('get-stuff-from-main', () => 'Main says something')
+ipcMain.handle('get-stuff-from-main', () => 'Main says something')
 // The browser sends comment to node, main.js
 ipcMain.handle('send-stuff-to-main', async (event, data) => console.log(data))
 

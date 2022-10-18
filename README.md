@@ -16,3 +16,7 @@
 - - tjänster till dem, 
 - knapp att beställa en tjänst till en viss cabin
 - knappar att radera eller ändra beställda tjänster
+
+notes:
+-renderer kommunicerar med main, endast
+-main (backend) sköter kommunikationen med API, jwt hantering..
