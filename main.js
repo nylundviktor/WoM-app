@@ -1,7 +1,9 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron')
-const path = require('path')
-const fetch = require('electron-fetch').default
+const { app, BrowserWindow, ipcMain } = require('electron'),
+  path = require('path'),
+  fetch = require('electron-fetch').default,
+  Store = require('electron-store'),  // 'localstorage' for electron
+  store = new Store()
 
 //move to dotenv,
 const API_URL = "https://nylund-svarvar.azurewebsites.net"
@@ -31,6 +33,7 @@ app.whenReady().then(() => {
   // Check original template for MacOS stuff!
 })
 
+
 //Login function
 ipcMain.handle('login', async (event, data) => {
   //log just to see if function runs
@@ -46,6 +49,10 @@ ipcMain.handle('login', async (event, data) => {
     console.log(user)
     if (resp.status > 201) return false
 
+    // save to users token in store
+    // TODO check if exists
+    store.set('jwt', user.token)
+
     return true
 
   } catch (error) {
@@ -57,13 +64,13 @@ ipcMain.handle('login', async (event, data) => {
 // Get cabins
 ipcMain.handle('get-cabins', async () => {
   console.log('main, get cabins')
-
   try {
-    const res = await fetch(API_URL + '/cabins', {
+    const resp = await fetch(API_URL + '/cabins', { // TODO: CHANGE TO CORRECT URL
+      headers: { 'Authorization': 'Bearer ' + store.get('jwt') },
       timeout: 3000
     })
-  
-    const cabins = await res.json()
+
+    const cabins = await resp.json()
     return cabins
 
   } catch (error) {

@@ -16,6 +16,7 @@
 - - tjänster till dem, 
 - knapp att beställa en tjänst till en viss cabin
 - knappar att radera eller ändra beställda tjänster
+- ordentligare kod än freddes slarviga exempel
 
 notes:
 -renderer kommunicerar med main, endast
