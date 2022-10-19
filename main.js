@@ -47,17 +47,24 @@ ipcMain.handle('login', async (event, data) => {
     })
     const user = await resp.json()
     console.log(user)
-    if (resp.status > 201) return false
-
-    // save to users token in store
+    
+    console.log('1')
+    
+    // successfull login
     // TODO check if exists
     store.set('jwt', user.token)
+    
+    // failed login
+    if (resp.status > 201) return user
+    
 
-    return true
+    console.log('2')
+
+    return false
 
   } catch (error) {
     console.log(error.message)
-    return false
+    return {'msg': 'Failed to log in.'}
   }
 })
 

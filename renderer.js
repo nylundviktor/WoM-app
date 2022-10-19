@@ -7,7 +7,7 @@
 
 getCabins = async () => {
     console.log('renderer, get cabins')
-    
+
     const cabins = await window.exposed.getCabins()
     console.log(cabins)
 
@@ -15,10 +15,24 @@ getCabins = async () => {
 getCabins()
 
 //login button
-document.querySelector('#btn-login').addEventListener('click', async () =>{
+document.querySelector('#btn-login').addEventListener('click', async () => {
+
+    document.querySelector('#login_msg').innerText = ''
+
     //pass on the values from login fields to preload.js (which in turn passes on to main.js)
-    await window.exposed.login({
+    const login_failed = await window.exposed.login({
         email: document.querySelector('#email').value,
         password: document.querySelector('#password').value
     })
+    console.log(login_failed)
+
+    if (login_failed) {
+        console.log(login_failed)
+        document.querySelector('#login_msg').innerText = login_failed.msg
+        return
+    } else {    
+        // TODO: IF LOGGED IN, HIDE FIELD
+        getCabins()
+    }
+
 })
