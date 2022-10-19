@@ -4,6 +4,21 @@
     display: none;
 }*/
 
-#test {
-    background-color: red;
+body {
+    background-color: darkgrey;
+}
+
+#email, #password {
+    width: 240px;
+    padding: 16px;
+    margin: 6px 2px;
+}
+
+#btn-login{
+    background-color: lightgrey;
+    border: none;
+    padding: 16px 40px;
+    text-decoration: none;
+    margin: 6px 2px;
+    cursor: pointer;
 }

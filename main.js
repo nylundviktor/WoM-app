@@ -5,8 +5,10 @@ const { app, BrowserWindow, ipcMain } = require('electron'),
   Store = require('electron-store'),  // 'localstorage' for electron
   store = new Store()
 
-//move to dotenv,
-const API_URL = "https://nylund-svarvar.azurewebsites.net"
+require('dotenv').config()
+
+console.log(process.env.DOTENV_TEST)
+const API_URL = process.env.CABIN_API_URL
 
 function createWindow() {
   // Create the browser window.
