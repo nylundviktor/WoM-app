@@ -10,12 +10,8 @@ contextBridge.exposeInMainWorld('exposed', {
 
   login: (data) => ipcRenderer.invoke('login', data),
 
+  getServices: () => ipcRenderer.invoke('get-services'),
 
-  /* EXAMPLE */
-  // expose a function in main (node) to renderer
-  getStuffFromMain: () => ipcRenderer.invoke('get-stuff-from-main'),
-
-  // send data back to main
-  sendStuffToMain: (data) => ipcRenderer.invoke('send-stuff-to-main', data)
+  getOrders: () => ipcRenderer.invoke('get-orders')
 
 })

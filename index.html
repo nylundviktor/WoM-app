@@ -17,14 +17,24 @@
       <label for="pass">Password</label><br>
       <input type="password" id="password" name="pass" placeholder="Password"><br>
       <input type="button" value="Login" id="btn-login">
+      <p id="login_msg"></p>
     </div>
 
-    <div id="login_msg" style="color: red;"></div>
+    <section class="right">
+      <h2>Bokade tjänster</h2>
+      <div id="orders"></div>
+    </section>
 
-    <div id="cabins">
-      You are not logged in.
-    </div>
+    <section>
+      <h2>Stugor</h2>
+      <div id="cabins"></div>
+    </section>
 
+    <section>
+      <h2>Boka en tjänst</h2>
+      <div id="services"></div>
+    </section>
+  
 
     <script src="./renderer.js"></script>
   </body>

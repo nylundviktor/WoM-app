@@ -8,7 +8,8 @@ const { app, BrowserWindow, ipcMain } = require('electron'),
 require('dotenv').config()
 
 console.log(process.env.DOTENV_TEST)
-const API_URL = process.env.CABIN_API_URL
+const CABIN_API_URL = process.env.CABIN_API_URL
+const SERVICE_API_URL = process.env.SERVICE_API_URL
 
 function createWindow() {
   // Create the browser window.
@@ -25,7 +26,7 @@ function createWindow() {
   mainWindow.loadFile('index.html')
 
   // Open DevTools automatically (comment out if you don't want it)
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
 }
 
@@ -38,17 +39,14 @@ app.whenReady().then(() => {
 
 //Login function
 ipcMain.handle('login', async (event, data) => {
-  //log just to see if function runs
-  console.log('login (main)')
   try {
-    const resp = await fetch(API_URL + '/users/login', {
+    const resp = await fetch(CABIN_API_URL + '/users/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
       timeout: 3000
     })
     const user = await resp.json()
-    console.log(user)
 
     // failed login
     if (resp.status > 201) return user
@@ -66,15 +64,16 @@ ipcMain.handle('login', async (event, data) => {
 
 // Get cabins
 ipcMain.handle('get-cabins', async () => {
-  console.log('main, get cabins')
   try {
-    const resp = await fetch(API_URL + '/cabins', { // TODO: CHANGE TO CORRECT URL
+    const resp = await fetch(SERVICE_API_URL + '/cabins', {
       headers: { 'Authorization': 'Bearer ' + store.get('jwt') },
       timeout: 3000
     })
-
     const cabins = await resp.json()
-    if (resp.status > 201) return false
+    if (resp.status > 201) {
+      return false
+    }
+
     return cabins
 
   } catch (error) {
@@ -83,12 +82,41 @@ ipcMain.handle('get-cabins', async () => {
   }
 })
 
+// Get services
+ipcMain.handle('get-services', async () => {
+  try {
+    const resp = await fetch(SERVICE_API_URL + '/services', {
+      headers: { 'Authorization': 'Bearer ' + store.get('jwt') },
+      timeout: 3000
+    })
 
-// Example 
-// Node sends comment to the browser, renderer.js
-ipcMain.handle('get-stuff-from-main', () => 'Main says something')
-// The browser sends comment to node, main.js
-ipcMain.handle('send-stuff-to-main', async (event, data) => console.log(data))
+    const services = await resp.json()
+    if (resp.status > 201) return false
+    return services
+
+  } catch (error) {
+    console.log(error.message)
+    return false
+  }
+})
+
+// Get bookings
+ipcMain.handle('get-orders', async () => {
+  try {
+    const resp = await fetch(SERVICE_API_URL + '/orders', {
+      headers: { 'Authorization': 'Bearer ' + store.get('jwt') },
+      timeout: 3000
+    })
+
+    const orders = await resp.json()
+    if (resp.status > 201) return false
+    return orders
+
+  } catch (error) {
+    console.log(error.message)
+    return false
+  }
+})
 
 
 app.on('window-all-closed', function () {

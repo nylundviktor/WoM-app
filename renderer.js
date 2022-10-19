@@ -5,21 +5,20 @@
  * to expose Node.js functionality from the main process.
  */
 
+
 getCabins = async () => {
-    console.log('renderer, get cabins')
-
     const cabins = await window.exposed.getCabins()
-    console.log(cabins)
 
-    if (!cabins) {
+    // show login if there are no cabins or failed to get
+    if (!cabins || cabins.length == 0) {
         document.querySelector('#login').style.display = 'block' 
         return
     }
 
-    let cabinsList = ''
+    let cabinsList = ""
     for (const cabin of cabins) {
         cabinsList += `
-            <div class="cabin">${cabin.address}</div>
+            <div class="cabin">${cabin.address} - ${cabin.size} m2</div>
         `
     }
     document.querySelector('#cabins').innerHTML = cabinsList
@@ -40,12 +39,46 @@ document.querySelector('#btn-login').addEventListener('click', async () => {
 
     if (login_failed) {
         document.querySelector('#login_msg').innerText = login_failed.msg
+        document.querySelector('#cabins').innerHTML = ""
         return
     }
 
+    // empty/hide cabins and login field after succesfull login
+    document.querySelector('#cabins').innerHTML = ""
     document.querySelector('#login').style.display = 'none' 
     
     getCabins()
-
+    getServices()
+    getOrders()
 
 })
+
+
+getServices = async () => {
+    const services = await window.exposed.getServices()
+
+    let servicesList = ''
+    for (const service of services) {
+        servicesList += `
+            <div class="service">${service.serviceName}</div>
+        `
+    }
+    document.querySelector('#services').innerHTML = servicesList
+
+}
+getServices()
+
+
+getOrders = async () => {
+    const orders = await window.exposed.getOrders()
+
+    let ordersList = ''
+    for (const order of orders) {
+        ordersList += `
+            <div class="order">${order.cabinId} - ${order.date}</div>
+        `
+    }
+    document.querySelector('#orders').innerHTML = ordersList
+
+}
+getOrders()

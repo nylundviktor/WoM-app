@@ -1,8 +1,8 @@
 /* Add styles here to customize the appearance of your app */
 
-/*#login {
+#login {
     display: none;
-}*/
+}
 
 body {
     background-color: darkgrey;
@@ -19,6 +19,51 @@ body {
     border: none;
     padding: 16px 40px;
     text-decoration: none;
-    margin: 6px 2px;
+    /*margin: 6px 2px;*/
     cursor: pointer;
+    margin: auto;
+}
+
+#login_msg {
+    color: red;
+    font-size: large;
+}
+
+.cabin {
+    margin: 6px 2px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 6px;
+    background-color: antiquewhite;
+    max-width: 400px;
+}
+
+.service {
+    margin: 6px 2px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 6px;
+    background-color: lavender;
+    max-width: 400px;
+}
+
+.order {
+    margin: 6px 2px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 6px;
+    background-color: lavender;
+    max-width: 400px;
+}
+
+.left {
+    position: absolute;
+    left: 6px;
+    padding: 6px;
+}
+
+.right {
+    position: absolute;
+    right: 30px;
+    padding: 6px;
 }
