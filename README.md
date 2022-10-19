@@ -1,20 +1,11 @@
 # WoM-APP
 
-# TODO
+## Viktor
 
-- autentisering till API 2
-- lägg till tjänster via APIt
+Del 1
+Att driftsätta gick enkelt, behövde endast repetera de detaljer jag glömt från lektionen
 
-- login till proj 1
-- visa cabins/owned/
-- visa tjänster för varje stuga
-- - kunna välja/editera tjänst
-- - istället lista på ens cabins
-- - tjänster till dem, 
-- knapp att beställa en tjänst till en viss cabin
+Hann inte göra:
 - knappar att radera eller ändra beställda tjänster
-- ordentligare kod än freddes slarviga exempel
-
-notes:
--renderer kommunicerar med main, endast
--main (backend) sköter kommunikationen med API, jwt hantering..
+- knapp att beställa en tjänst till en viss cabin
+Dessa skulle även ha varit svårt, osäker hur göra
