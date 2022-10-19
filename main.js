@@ -47,19 +47,13 @@ ipcMain.handle('login', async (event, data) => {
     })
     const user = await resp.json()
     console.log(user)
-    
-    console.log('1')
-    
-    // successfull login
-    // TODO check if exists
-    store.set('jwt', user.token)
-    
+
     // failed login
     if (resp.status > 201) return user
-    
-
-    console.log('2')
-
+    // successfull login
+    // TODO: check if exists
+    store.set('jwt', user.token)
+    // login failed = false -> get cabins
     return false
 
   } catch (error) {
@@ -78,6 +72,7 @@ ipcMain.handle('get-cabins', async () => {
     })
 
     const cabins = await resp.json()
+    if (resp.status > 201) return false
     return cabins
 
   } catch (error) {

@@ -11,6 +11,19 @@ getCabins = async () => {
     const cabins = await window.exposed.getCabins()
     console.log(cabins)
 
+    if (!cabins) {
+        document.querySelector('#login').style.display = 'block' 
+        return
+    }
+
+    let cabinsList = ''
+    for (const cabin of cabins) {
+        cabinsList += `
+            <div class="cabin">${cabin.address}</div>
+        `
+    }
+    document.querySelector('#cabins').innerHTML = cabinsList
+
 }
 getCabins()
 
@@ -24,15 +37,15 @@ document.querySelector('#btn-login').addEventListener('click', async () => {
         email: document.querySelector('#email').value,
         password: document.querySelector('#password').value
     })
-    console.log(login_failed)
 
     if (login_failed) {
-        console.log(login_failed)
         document.querySelector('#login_msg').innerText = login_failed.msg
         return
-    } else {    
-        // TODO: IF LOGGED IN, HIDE FIELD
-        getCabins()
     }
+
+    document.querySelector('#login').style.display = 'none' 
+    
+    getCabins()
+
 
 })

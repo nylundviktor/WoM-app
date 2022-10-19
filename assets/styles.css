@@ -1,5 +1,9 @@
 /* Add styles here to customize the appearance of your app */
 
+/*#login {
+    display: none;
+}*/
+
 #test {
     background-color: red;
 }
